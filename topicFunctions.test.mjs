@@ -34,13 +34,13 @@ describe("generateRevisionDates", () => {
 describe("createAgendaItems", () => {
     it("creates a list of agenda items for a given topic and dates", () => {
         const result = [
-            { topic: "Learn JavScript", date: "2026-07-26" },
-            { topic: "Learn JavScript", date: "2026-08-19" },
-            { topic: "Learn JavScript", date: "2026-10-19" },
-            { topic: "Learn JavScript", date: "2027-01-19" },
-            { topic: "Learn JavScript", date: "2027-07-19" },
+            { topic: "Learn JavaScript", date: "2026-07-26" },
+            { topic: "Learn JavaScript", date: "2026-08-19" },
+            { topic: "Learn JavaScript", date: "2026-10-19" },
+            { topic: "Learn JavaScript", date: "2027-01-19" },
+            { topic: "Learn JavaScript", date: "2027-07-19" },
         ];
-        expect(createAgendaItems("Learn JavScript", "2026-07-19")).toEqual(
+        expect(createAgendaItems("Learn JavaScript", "2026-07-19")).toEqual(
             result,
         );
     });
@@ -49,18 +49,18 @@ describe("createAgendaItems", () => {
 describe("sortAgendaItems", () => {
     it("returns agenda sorted in choronological order", () => {
         const input = [
-            { topic: "Learn JavScript", date: "2027-07-19" },
-            { topic: "Learn JavScript", date: "2027-01-19" },
-            { topic: "Learn JavScript", date: "2026-10-19" },
-            { topic: "Learn JavScript", date: "2026-08-19" },
-            { topic: "Learn JavScript", date: "2026-07-26" },
+            { topic: "Learn JavaScript", date: "2027-07-19" },
+            { topic: "Learn JavaScript", date: "2027-01-19" },
+            { topic: "Learn JavaScript", date: "2026-10-19" },
+            { topic: "Learn JavaScript", date: "2026-08-19" },
+            { topic: "Learn JavaScript", date: "2026-07-26" },
         ];
         const result = [
-            { topic: "Learn JavScript", date: "2026-07-26" },
-            { topic: "Learn JavScript", date: "2026-08-19" },
-            { topic: "Learn JavScript", date: "2026-10-19" },
-            { topic: "Learn JavScript", date: "2027-01-19" },
-            { topic: "Learn JavScript", date: "2027-07-19" },
+            { topic: "Learn JavaScript", date: "2026-07-26" },
+            { topic: "Learn JavaScript", date: "2026-08-19" },
+            { topic: "Learn JavaScript", date: "2026-10-19" },
+            { topic: "Learn JavaScript", date: "2027-01-19" },
+            { topic: "Learn JavaScript", date: "2027-07-19" },
         ];
         expect(sortAgendaItems(input)).toEqual(result);
     });
