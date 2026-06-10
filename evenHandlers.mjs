@@ -36,7 +36,7 @@ function displayAgenda(userId, agendaItems) {
     }
     const agendaLi = agendaItems.map(({ topic, date }) => {
         const li = document.createElement("li");
-        li.textContent = `Topic: ${topic} Date: ${date}`;
+        li.textContent = `${topic} || Date: ${date}`;
         return li;
     });
     topicsUl.replaceChildren(...agendaLi);
