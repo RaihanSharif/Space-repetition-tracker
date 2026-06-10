@@ -2,14 +2,11 @@
     "name": "project-spaced-repetition",
     "version": "1.0.0",
     "scripts": {
-        "test": "jest",
+        "test": "vitest",
         "start": "browser-sync start --server --files '*.js, *.html, *.css'"
     },
     "devDependencies": {
-        "@babel/core": "^7.29.7",
-        "@babel/preset-env": "^7.29.7",
-        "babel-jest": "^30.4.1",
         "browser-sync": "^3.0.4",
-        "jest": "^30.4.2"
+        "vitest": "^4.1.8"
     }
 }
