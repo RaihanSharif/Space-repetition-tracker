@@ -1,6 +1,5 @@
 import { getUserIds } from "./common.mjs";
 import { handleFormSubmit, handleSelectUser } from "./eventHandlers.mjs";
-import { addData, clearData } from "./storage.mjs";
 
 function setup() {
     // populate the user select element

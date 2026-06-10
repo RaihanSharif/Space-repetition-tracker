@@ -20,8 +20,8 @@ export function handleFormSubmit(e) {
             document.getElementById("topic-date").value =
                 Temporal.Now.plainDateISO();
             displayAgenda(userId, getAgenda(userId));
-        } catch (e) {
-            alert(e.message);
+        } catch (err) {
+            alert(err.message);
         }
     } else {
         alert("Please select a user before adding topic");

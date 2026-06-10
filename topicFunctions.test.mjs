@@ -13,7 +13,7 @@ import {
 import { addData, getData } from "./storage.mjs";
 vi.mock("./storage.mjs");
 
-describe("generateRevisionDates", () => {
+describe("createRevisionDates", () => {
     it("returns PlainDate objects", () => {
         const dates = createRevisionDates("2026-07-19");
         expect(dates[0]).toBeInstanceOf(Temporal.PlainDate);
