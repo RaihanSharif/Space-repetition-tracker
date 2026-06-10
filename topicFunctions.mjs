@@ -50,3 +50,12 @@ export function storeAgendaItems(userId, agendaItems) {
 
     addData(userId, agendaItems);
 }
+
+export function removeExpiredItems(agendaItems) {
+    const today = Temporal.Now.plainDateISO();
+
+    return agendaItems.filter((item) => {
+        const itemDate = Temporal.PlainDate.from(item.date);
+        return Temporal.PlainDate.compare(itemDate, today) >= 0;
+    });
+}

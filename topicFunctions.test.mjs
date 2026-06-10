@@ -6,13 +6,11 @@ import {
     createAgendaItems,
     sortAgendaItems,
     storeAgendaItems,
+    removeExpiredItems,
 } from "./topicFunctions.mjs";
 
 import { addData, getData } from "./storage.mjs";
-vi.mock(import("./storage.mjs"), () => ({
-    getData: vi.fn(),
-    addData: vi.fn(),
-}));
+vi.mock("./storage.mjs");
 
 describe("generateRevisionDates", () => {
     it("returns PlainDate objects", () => {
@@ -89,5 +87,33 @@ describe("storeAgendaItems", () => {
 
         storeAgendaItems("1", [{ topic: "Mocking", date: "2026-05-01" }]);
         expect(addData).toHaveBeenCalled();
+    });
+});
+
+describe("removeExpiredItems", () => {
+    it("filter out revision dates that are in the past", () => {
+        const initial = Temporal.Now.plainDateISO().subtract({ weeks: 2 });
+
+        const week = initial.add({ weeks: 1 }).toString();
+        const month = initial.add({ months: 1 }).toString();
+        const input = [
+            {
+                topic: "learn JavaScript",
+                date: week,
+            },
+            {
+                topic: "learn JavaScript",
+                date: month,
+            },
+        ];
+
+        const output = [
+            {
+                topic: "learn JavaScript",
+                date: month,
+            },
+        ];
+
+        expect(removeExpiredItems(input)).toEqual(output);
     });
 });
