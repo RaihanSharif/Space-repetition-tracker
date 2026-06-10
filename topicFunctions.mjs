@@ -37,7 +37,8 @@ export function sortAgendaItems(agendaItems) {
 // store agenda items in localStorage
 export function storeAgendaItems(userId, agendaItems) {
     // get agenda items for the user, dedupe and then store
-    const existing = getData(userId);
+    const existing = getData(userId) ?? [];
+
     const exists = agendaItems.some((item) => {
         return existing.some((item2) => item2.topic === item.topic);
     });
@@ -50,13 +51,16 @@ export function storeAgendaItems(userId, agendaItems) {
 }
 
 export function addTopic(userId, topic, date) {
-    const agendaItems = createAgendaItems(date);
+    const agendaItems = createAgendaItems(topic, date);
     storeAgendaItems(userId, agendaItems);
 }
 
 export function removeExpiredItems(agendaItems) {
     const today = Temporal.Now.plainDateISO();
 
+    if (!agendaItems || agendaItems.length === 0) {
+        return [];
+    }
     return agendaItems.filter((item) => {
         const itemDate = Temporal.PlainDate.from(item.date);
         return Temporal.PlainDate.compare(itemDate, today) >= 0;
@@ -64,7 +68,7 @@ export function removeExpiredItems(agendaItems) {
 }
 
 export function getAgenda(userId) {
-    const allAgendaItems = getData(userId);
+    const allAgendaItems = getData(userId) ?? [];
     const validAgendaItems = removeExpiredItems(allAgendaItems);
     return sortAgendaItems(validAgendaItems);
 }
