@@ -1,6 +1,6 @@
 import { addData, getData } from "./storage.mjs";
 
-// Calculate revision dates given a date
+// generates revision dates at 1w, 1m, 3m, 6m, 1y intervals
 export function createRevisionDates(initialDate) {
     const date = Temporal.PlainDate.from(initialDate);
 
@@ -15,7 +15,13 @@ export function createRevisionDates(initialDate) {
     return dates;
 }
 
-// create agenda items given date, and a topic
+/**
+ * Creates agenda items for a topic across 5 revision dates.
+ *
+ * @param {string} topic - The topic title
+ * @param {string} date - ISO date string (YYYY-MM-DD)
+ * @returns {{ topic: string, date: string }[]} Array of agenda items
+ */
 export function createAgendaItems(topic, date) {
     const dates = createRevisionDates(date);
     const agendaItems = dates.map((d) => {
@@ -36,7 +42,6 @@ export function sortAgendaItems(agendaItems) {
 
 // store agenda items in localStorage
 export function storeAgendaItems(userId, agendaItems) {
-    // get agenda items for the user, dedupe and then store
     const existing = getData(userId) ?? [];
 
     const exists = agendaItems.some((item) => {
@@ -50,6 +55,14 @@ export function storeAgendaItems(userId, agendaItems) {
     addData(userId, agendaItems);
 }
 
+/**
+ * Creates and stores revision agenda items for a topic.
+ *
+ * @param {string} userId - The ID of the user
+ * @param {string} topic - The topic title
+ * @param {string} date - ISO date string (YYYY-MM-DD)
+ * @throws {Error} If the topic already exists for the user
+ */
 export function addTopic(userId, topic, date) {
     const agendaItems = createAgendaItems(topic, date);
     storeAgendaItems(userId, agendaItems);
