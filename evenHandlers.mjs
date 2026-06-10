@@ -14,12 +14,15 @@ export function handleFormSubmit(e) {
     const userId = document.getElementById("user-select").value;
 
     if (userId) {
-        addTopic(userId, topicTitle.value, topicDate.value);
-        e.target.reset();
-        document.getElementById("topic-date").value =
-            Temporal.Now.plainDateISO();
-
-        displayAgenda(userId, getAgenda(userId));
+        try {
+            addTopic(userId, topicTitle.value, topicDate.value);
+            e.target.reset();
+            document.getElementById("topic-date").value =
+                Temporal.Now.plainDateISO();
+            displayAgenda(userId, getAgenda(userId));
+        } catch (e) {
+            alert(e.message);
+        }
     } else {
         alert("Please select a user before adding topic");
     }
@@ -41,7 +44,6 @@ function displayAgenda(userId, agendaItems) {
         });
         li.textContent = `${topic} || Date: ${tempDate}`;
         return li;
-        w;
     });
     topicsUl.replaceChildren(...agendaLi);
 }
