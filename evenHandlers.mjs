@@ -36,8 +36,12 @@ function displayAgenda(userId, agendaItems) {
     }
     const agendaLi = agendaItems.map(({ topic, date }) => {
         const li = document.createElement("li");
-        li.textContent = `${topic} || Date: ${date}`;
+        const tempDate = Temporal.PlainDate.from(date).toLocaleString("en-GB", {
+            dateStyle: "long",
+        });
+        li.textContent = `${topic} || Date: ${tempDate}`;
         return li;
+        w;
     });
     topicsUl.replaceChildren(...agendaLi);
 }
