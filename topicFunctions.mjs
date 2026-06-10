@@ -2,7 +2,7 @@ import { Temporal } from "@js-temporal/polyfill";
 
 import { addData, getData } from "./storage.mjs";
 
-// function to calculate revision dates given a date
+// Calculate revision dates given a date
 export function createRevisionDates(initialDate) {
     const date = Temporal.PlainDate.from(initialDate);
 
@@ -49,6 +49,11 @@ export function storeAgendaItems(userId, agendaItems) {
     }
 
     addData(userId, agendaItems);
+}
+
+export function addTopic(userId, topic, date) {
+    const agendaItems = createAgendaItems(date);
+    storeAgendaItems(userId, agendaItems);
 }
 
 export function removeExpiredItems(agendaItems) {
