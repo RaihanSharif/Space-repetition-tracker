@@ -44,6 +44,10 @@ describe("createAgendaItems", () => {
             result,
         );
     });
+
+    it("throws on invalid date format", () => {
+        expect(() => createAgendaItems("Learn JavaScript", "asfd")).toThrow();
+    });
 });
 
 describe("sortAgendaItems", () => {
@@ -63,6 +67,21 @@ describe("sortAgendaItems", () => {
             { topic: "Learn JavaScript", date: "2027-07-19" },
         ];
         expect(sortAgendaItems(input)).toEqual(result);
+    });
+
+    it("doesn't break already sorted array", () => {
+        const input = [
+            { topic: "Learn JavaScript", date: "2026-07-26" },
+            { topic: "Learn JavaScript", date: "2026-08-19" },
+            { topic: "Learn JavaScript", date: "2026-10-19" },
+            { topic: "Learn JavaScript", date: "2027-01-19" },
+            { topic: "Learn JavaScript", date: "2027-07-19" },
+        ];
+        expect(sortAgendaItems(input)).toEqual(input);
+    });
+
+    it("returns empty arry when input is an empty array", () => {
+        expect(sortAgendaItems([])).toEqual([]);
     });
 });
 

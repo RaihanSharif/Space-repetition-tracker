@@ -19,7 +19,7 @@ export function createRevisionDates(initialDate) {
  * Creates agenda items for a topic across 5 revision dates.
  *
  * @param {string} topic - The topic title
- * @param {string} date - ISO date string (YYYY-MM-DD)
+ * @param {string} date - ISO date string (YYYY-MM-DD) -- Throws RageError if invalid date string
  * @returns {{ topic: string, date: string }[]} Array of agenda items
  */
 export function createAgendaItems(topic, date) {
