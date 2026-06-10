@@ -1,6 +1,6 @@
 import { Temporal } from "@js-temporal/polyfill";
 
-import { addData } from "./storage.mjs";
+import { addData, getData } from "./storage.mjs";
 
 // function to calculate revision dates given a date
 export function createRevisionDates(initialDate) {
@@ -39,5 +39,14 @@ export function sortAgendaItems(agendaItems) {
 // store agenda items in localStorage
 export function storeAgendaItems(userId, agendaItems) {
     // get agenda items for the user, dedupe and then store
+    const existing = getData(userId);
+    const exists = agendaItems.some((item) => {
+        return existing.some((item2) => item2.topic === item.topic);
+    });
+
+    if (exists) {
+        throw new Error("topic already exists");
+    }
+
     addData(userId, agendaItems);
 }

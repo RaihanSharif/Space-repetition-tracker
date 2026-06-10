@@ -1,11 +1,18 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi, afterEach } from "vitest";
 import { Temporal } from "@js-temporal/polyfill";
 
 import {
     createRevisionDates,
     createAgendaItems,
     sortAgendaItems,
+    storeAgendaItems,
 } from "./topicFunctions.mjs";
+
+import { addData, getData } from "./storage.mjs";
+vi.mock(import("./storage.mjs"), () => ({
+    getData: vi.fn(),
+    addData: vi.fn(),
+}));
 
 describe("generateRevisionDates", () => {
     it("returns PlainDate objects", () => {
@@ -57,5 +64,30 @@ describe("sortAgendaItems", () => {
             { topic: "Learn JavScript", date: "2027-07-19" },
         ];
         expect(sortAgendaItems(input)).toEqual(result);
+    });
+});
+
+describe("storeAgendaItems", () => {
+    afterEach(() => vi.resetAllMocks());
+
+    it("Throws error if topic already exists", () => {
+        vi.mocked(getData).mockReturnValue([
+            { topic: "Learn JavScript", date: "2026-07-26" },
+        ]);
+
+        expect(() =>
+            storeAgendaItems("1", [
+                { topic: "Learn JavScript", date: "2026-07-26" },
+            ]),
+        ).toThrow();
+    });
+
+    it("call addData if not existing topic", () => {
+        vi.mocked(getData).mockReturnValue([
+            { topic: "Learn JavScript", date: "2026-07-26" },
+        ]);
+
+        storeAgendaItems("1", [{ topic: "Mocking", date: "2026-05-01" }]);
+        expect(addData).toHaveBeenCalled();
     });
 });
