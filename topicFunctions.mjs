@@ -59,3 +59,9 @@ export function removeExpiredItems(agendaItems) {
         return Temporal.PlainDate.compare(itemDate, today) >= 0;
     });
 }
+
+export function getAgenda(userId) {
+    const allAgendaItems = getData(userId);
+    const validAgendaItems = removeExpiredItems(allAgendaItems);
+    return sortAgendaItems(validAgendaItems);
+}
