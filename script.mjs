@@ -1,5 +1,5 @@
 import { getUserIds } from "./common.mjs";
-import { handleFormSubmit, handleSelectUser } from "./evenHandlers.mjs";
+import { handleFormSubmit, handleSelectUser } from "./eventHandlers.mjs";
 import { addData, clearData } from "./storage.mjs";
 
 function setup() {
@@ -21,12 +21,6 @@ function setup() {
     const form = document.getElementById("topic-form");
 
     form.addEventListener("submit", handleFormSubmit);
-
-    // clearData("1");
-    // clearData("2");
-    // clearData("3");
-    // clearData("4");
-    // clearData("5");
 }
 
 setup();

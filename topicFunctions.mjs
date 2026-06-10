@@ -54,7 +54,7 @@ export function addTopic(userId, topic, date) {
 export function removeExpiredItems(agendaItems) {
     const today = Temporal.Now.plainDateISO();
 
-    if (!agendaItems || agendaItems.length === 0) {
+    if (agendaItems.length === 0) {
         return [];
     }
     return agendaItems.filter((item) => {
