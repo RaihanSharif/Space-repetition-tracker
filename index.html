@@ -4,17 +4,19 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script type="module" src="script.mjs"></script>
-        <title>Spaced Repition Tracker</title>
+        <title>Spaced Repetition Tracker</title>
     </head>
     <body>
         <header>
-            <h1>Space Repition Tracker</h1>
+            <h1>Spaced Repetition Tracker</h1>
         </header>
         <main>
-            <select name="user-select" id="user-select">
+            <label for="user-select">Select a user: </label>
+            <select name="user-select" id="user-select" autofocus>
                 <option value="" disabled selected>SELECT A USER</option>
             </select>
-            <form>
+            <!-- Aria label not strictly necessary -->
+            <form aria-labelledby="form-heading">
                 <h2 id="form-heading">Add new topic</h2>
                 <label for="topic">Topic: </label>
                 <input
@@ -23,13 +25,12 @@
                     name="topic"
                     minlength="1"
                     maxlength="100"
-                    autofocus
                     required />
                 <label for="topic-date">Topic add date: </label>
                 <input type="date" name="topic-date" id="topic-date" required />
                 <button type="submit">Add topic</button>
             </form>
-            <section id="topic-container">
+            <section id="topic-container" aria-label="topics section">
                 <h2 id="topic-section-status">No User is selected.</h2>
                 <ul id="topics-ul"></ul>
             </section>

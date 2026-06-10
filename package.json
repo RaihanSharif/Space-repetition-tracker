@@ -1,7 +1,11 @@
 {
-  "name": "project-spaced-repetition",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "node common.test.mjs"
-  }
+    "name": "project-spaced-repetition",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "node common.test.mjs",
+        "start": "browser-sync start --server --files '*.js, *.html, *.css'"
+    },
+    "devDependencies": {
+        "browser-sync": "^3.0.4"
+    }
 }
