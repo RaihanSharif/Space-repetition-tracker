@@ -6,7 +6,20 @@
 
 import { getUserIds } from "./common.mjs";
 
-window.onload = function () {
-  const users = getUserIds();
-  document.querySelector("body").innerText = `There are ${users.length} users`;
-};
+function setup() {
+    // populate the user select element
+    const userSelect = document.getElementById("user-select");
+    const userIds = getUserIds();
+    userIds.forEach((id) => {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = `User ${id}`;
+        userSelect.appendChild(opt);
+    });
+
+    // set calendar default to current date
+    document.getElementById("topic-date").value = Temporal.Now.plainDateISO();
+    console.log(Temporal.Now.plainDateISO());
+}
+
+setup();
