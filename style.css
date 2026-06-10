@@ -1,8 +1,12 @@
 ul {
     list-style: none;
-    padding: 1rem;
 }
 
 li {
+    padding: 0.5rem;
+}
+
+form > *,
+select {
     padding: 0.5rem;
 }
