@@ -6,8 +6,8 @@ import {
     createRevisionDates,
     createAgendaItems,
     sortAgendaItems,
-    storeAgendaItems,
     removeExpiredItems,
+    addTopic,
 } from "./topicFunctions.mjs";
 
 import { addData, getData } from "./storage.mjs";
@@ -66,28 +66,38 @@ describe("sortAgendaItems", () => {
     });
 });
 
-describe("storeAgendaItems", () => {
+describe("addTopic", () => {
     afterEach(() => vi.resetAllMocks());
 
-    it("Throws error if topic already exists", () => {
+    it("throws if topic already exists", () => {
         vi.mocked(getData).mockReturnValue([
-            { topic: "Learn JavScript", date: "2026-07-26" },
+            { topic: "Learn JavaScript", date: "2026-07-26" },
         ]);
 
-        expect(() =>
-            storeAgendaItems("1", [
-                { topic: "Learn JavScript", date: "2026-07-26" },
-            ]),
-        ).toThrow();
+        expect(() => addTopic("1", "Learn JavaScript", "2026-07-19")).toThrow(
+            "Topic already exists",
+        );
     });
 
-    it("call addData if not existing topic", () => {
-        vi.mocked(getData).mockReturnValue([
-            { topic: "Learn JavScript", date: "2026-07-26" },
-        ]);
+    it("calls addData with agenda items if topic does not exist", () => {
+        vi.mocked(getData).mockReturnValue([]);
 
-        storeAgendaItems("1", [{ topic: "Mocking", date: "2026-05-01" }]);
-        expect(addData).toHaveBeenCalled();
+        addTopic("1", "Learn JavaScript", "2026-07-19");
+
+        expect(addData).toHaveBeenCalledWith("1", expect.any(Array));
+    });
+
+    it("calls addData with correct topic in agenda items", () => {
+        vi.mocked(getData).mockReturnValue([]);
+
+        addTopic("1", "Learn JavaScript", "2026-07-19");
+
+        expect(addData).toHaveBeenCalledWith(
+            "1",
+            expect.arrayContaining([
+                expect.objectContaining({ topic: "Learn JavaScript" }),
+            ]),
+        );
     });
 });
 

@@ -31,30 +31,6 @@ export function createAgendaItems(topic, date) {
     return agendaItems;
 }
 
-// sort agenda items chronologically
-export function sortAgendaItems(agendaItems) {
-    return agendaItems.toSorted((a, b) => {
-        const tempA = Temporal.PlainDate.from(a.date);
-        const tempB = Temporal.PlainDate.from(b.date);
-        return Temporal.PlainDate.compare(tempA, tempB);
-    });
-}
-
-// store agenda items in localStorage
-export function storeAgendaItems(userId, agendaItems) {
-    const existing = getData(userId) ?? [];
-
-    const exists = agendaItems.some((item) => {
-        return existing.some((item2) => item2.topic === item.topic);
-    });
-
-    if (exists) {
-        throw new Error("topic already exists");
-    }
-
-    addData(userId, agendaItems);
-}
-
 /**
  * Creates and stores revision agenda items for a topic.
  *
@@ -64,10 +40,17 @@ export function storeAgendaItems(userId, agendaItems) {
  * @throws {Error} If the topic already exists for the user
  */
 export function addTopic(userId, topic, date) {
+    const existing = getData(userId) ?? [];
+
+    if (existing.some((item) => item.topic === topic)) {
+        throw new Error("Topic already exists");
+    }
+
     const agendaItems = createAgendaItems(topic, date);
-    storeAgendaItems(userId, agendaItems);
+    addData(userId, agendaItems);
 }
 
+// helper function that removes topics with expired revision dates
 export function removeExpiredItems(agendaItems) {
     const today = Temporal.Now.plainDateISO();
 
@@ -80,6 +63,22 @@ export function removeExpiredItems(agendaItems) {
     });
 }
 
+// sort agenda items chronologically
+export function sortAgendaItems(agendaItems) {
+    return agendaItems.toSorted((a, b) => {
+        const tempA = Temporal.PlainDate.from(a.date);
+        const tempB = Temporal.PlainDate.from(b.date);
+        return Temporal.PlainDate.compare(tempA, tempB);
+    });
+}
+
+/**
+ * Retrieves agenda items for a user, filtered and sorted.
+ * Removes expired items and sorts by date ascending.
+ *
+ * @param {string} userId - The ID of the user
+ * @returns {{ topic: string, date: string }[]} Sorted, non-expired agenda items
+ */
 export function getAgenda(userId) {
     const allAgendaItems = getData(userId) ?? [];
     const validAgendaItems = removeExpiredItems(allAgendaItems);
