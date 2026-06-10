@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script type="module" src="script.mjs"></script>
         <title>Spaced Repetition Tracker</title>
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
         <header>
@@ -30,7 +31,7 @@
                 <input type="date" name="topic-date" id="topic-date" required />
                 <button type="submit">Add topic</button>
             </form>
-            <section id="topic-container" aria-label="topics section">
+            <section id="topic-container" aria-label="topics list container">
                 <h2 id="topic-section-status">No User is selected.</h2>
                 <ul id="topics-ul"></ul>
             </section>

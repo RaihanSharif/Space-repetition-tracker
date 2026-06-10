@@ -2,10 +2,12 @@
     "name": "project-spaced-repetition",
     "version": "1.0.0",
     "scripts": {
-        "test": "node common.test.mjs",
+        "test": "vitest",
         "start": "browser-sync start --server --files '*.js, *.html, *.css'"
     },
     "devDependencies": {
-        "browser-sync": "^3.0.4"
+        "@js-temporal/polyfill": "^0.5.1",
+        "browser-sync": "^3.0.4",
+        "vitest": "^4.1.8"
     }
 }
