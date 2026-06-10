@@ -6,10 +6,8 @@
         "start": "browser-sync start --server --files '*.js, *.html, *.css'"
     },
     "devDependencies": {
+        "@js-temporal/polyfill": "^0.5.1",
         "browser-sync": "^3.0.4",
         "vitest": "^4.1.8"
-    },
-    "dependencies": {
-        "@js-temporal/polyfill": "^0.5.1"
     }
 }
