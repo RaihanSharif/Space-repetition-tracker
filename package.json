@@ -8,5 +8,8 @@
     "devDependencies": {
         "browser-sync": "^3.0.4",
         "vitest": "^4.1.8"
+    },
+    "dependencies": {
+        "@js-temporal/polyfill": "^0.5.1"
     }
 }
