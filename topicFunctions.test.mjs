@@ -51,7 +51,7 @@ describe("createAgendaItems", () => {
 });
 
 describe("sortAgendaItems", () => {
-    it("returns agenda sorted in choronological order", () => {
+    it("returns agenda sorted in chronological order", () => {
         const input = [
             { topic: "Learn JavaScript", date: "2027-07-19" },
             { topic: "Learn JavaScript", date: "2027-01-19" },
@@ -80,7 +80,7 @@ describe("sortAgendaItems", () => {
         expect(sortAgendaItems(input)).toEqual(input);
     });
 
-    it("returns empty arry when input is an empty array", () => {
+    it("returns empty array when input is an empty array", () => {
         expect(sortAgendaItems([])).toEqual([]);
     });
 });
@@ -145,5 +145,62 @@ describe("removeExpiredItems", () => {
         ];
 
         expect(removeExpiredItems(input)).toEqual(output);
+    });
+
+    it("returns empty array when all revision dates in the past", () => {
+        const initial = Temporal.Now.plainDateISO().subtract({ years: 2 });
+
+        const week = initial.add({ weeks: 1 }).toString();
+        const month = initial.add({ months: 1 }).toString();
+        const input = [
+            {
+                topic: "learn JavaScript",
+                date: week,
+            },
+            {
+                topic: "learn JavaScript",
+                date: month,
+            },
+        ];
+
+        expect(removeExpiredItems(input)).toEqual([]);
+    });
+
+    it("does not remove pending revision dates", () => {
+        const initial = Temporal.Now.plainDateISO();
+
+        const week = initial.add({ weeks: 1 }).toString();
+        const month = initial.add({ months: 1 }).toString();
+        const threeMonth = initial.add({ months: 3 }).toString();
+        const sixMonth = initial.add({ months: 6 }).toString();
+        const year = initial.add({ years: 1 }).toString();
+        const input = [
+            {
+                topic: "learn JavaScript",
+                date: week,
+            },
+            {
+                topic: "learn JavaScript",
+                date: month,
+            },
+            {
+                topic: "learn JavaScript",
+                date: threeMonth,
+            },
+            {
+                topic: "learn JavaScript",
+                date: sixMonth,
+            },
+            {
+                topic: "learn JavaScript",
+                date: year,
+            },
+        ];
+
+        expect(removeExpiredItems(input)).toEqual(input);
+    });
+
+    it("returns empty array if input is empty array", () => {
+        expect(removeExpiredItems([])).toEqual([]);
     });
 });
