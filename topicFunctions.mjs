@@ -1,5 +1,3 @@
-import { Temporal } from "@js-temporal/polyfill";
-
 import { addData, getData } from "./storage.mjs";
 
 // Calculate revision dates given a date

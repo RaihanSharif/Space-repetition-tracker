@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { Temporal } from "@js-temporal/polyfill";
+globalThis.Temporal = Temporal;
 
 import {
     createRevisionDates,
