@@ -98,6 +98,32 @@ describe("addTopic", () => {
         );
     });
 
+    it("throws if invalid date format", () => {
+        vi.mocked(getData).mockReturnValue([]);
+
+        expect(() => addTopic("1", "Learn JavaScript", "asdf")).toThrow(
+            "Invalid date format. Please use YYYY-MM-DD",
+        );
+    });
+
+    it("throws if topic is empty or whitespace", () => {
+        expect(() => addTopic("1", "", "2026-07-19")).toThrow(
+            "Topic cannot be empty",
+        );
+        expect(() => addTopic("1", "   ", "2026-07-19")).toThrow(
+            "Topic cannot be empty",
+        );
+    });
+
+    it("throws if date is empty or white space", () => {
+        expect(() => addTopic("1", "Learn JavaScript", "")).toThrow(
+            "Date cannot be empty",
+        );
+        expect(() => addTopic("1", "Learn JavaScript", " ")).toThrow(
+            "Date cannot be empty",
+        );
+    });
+
     it("calls addData with agenda items if topic does not exist", () => {
         vi.mocked(getData).mockReturnValue([]);
 
