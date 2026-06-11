@@ -1,12 +1,21 @@
 ul {
     list-style: none;
+    padding-left: 0;
 }
 
 li {
+    border: 1px solid black;
+    margin: 0.5rem 0;
     padding: 0.5rem;
 }
 
 form > *,
 select {
     padding: 0.5rem;
+}
+
+form {
+    border: 1px black solid;
+    padding: 1rem 0;
+    margin: 1rem 0;
 }
