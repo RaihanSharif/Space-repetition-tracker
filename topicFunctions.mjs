@@ -1,3 +1,4 @@
+import { Temporal } from "temporal-polyfill";
 import { addData, getData } from "./storage.mjs";
 
 // generates revision dates at 1w, 1m, 3m, 6m, 1y intervals
