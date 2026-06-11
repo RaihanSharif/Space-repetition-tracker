@@ -19,7 +19,7 @@ export function createRevisionDates(initialDate) {
  * Creates agenda items for a topic across 5 revision dates.
  *
  * @param {string} topic - The topic title
- * @param {string} date - ISO date string (YYYY-MM-DD) -- Throws RageError if invalid date string
+ * @param {string} date - ISO date string (YYYY-MM-DD) -- Throws RangeError if invalid date string
  * @returns {{ topic: string, date: string }[]} Array of agenda items
  */
 export function createAgendaItems(topic, date) {
@@ -40,23 +40,33 @@ export function createAgendaItems(topic, date) {
  * @throws {Error} If the topic already exists for the user
  */
 export function addTopic(userId, topic, date) {
+    // ? is optional chaining. if topic is null/undefined, return null/undefined, else trim
+    if (!topic?.trim()) {
+        throw new Error("Topic cannot be empty");
+    }
+
+    if (!date?.trim()) {
+        throw new Error("Date cannot be empty");
+    }
+
     const existing = getData(userId) ?? [];
 
     if (existing.some((item) => item.topic === topic)) {
         throw new Error("Topic already exists");
     }
+    let agendaItems;
+    try {
+        agendaItems = createAgendaItems(topic, date);
+    } catch (err) {
+        throw new Error("Invalid date format. Please use YYYY-MM-DD");
+    }
 
-    const agendaItems = createAgendaItems(topic, date);
     addData(userId, agendaItems);
 }
 
 // helper function that removes topics with expired revision dates
 export function removeExpiredItems(agendaItems) {
     const today = Temporal.Now.plainDateISO();
-
-    if (agendaItems.length === 0) {
-        return [];
-    }
     return agendaItems.filter((item) => {
         const itemDate = Temporal.PlainDate.from(item.date);
         return Temporal.PlainDate.compare(itemDate, today) >= 0;
@@ -73,7 +83,7 @@ export function sortAgendaItems(agendaItems) {
 }
 
 /**
- * Retrieves agenda items for a user, filtered and sorted.
+ * Retrieves agenda items for a user, filtered and sorted chronologically.
  * Removes expired items and sorts by date ascending.
  *
  * @param {string} userId - The ID of the user
