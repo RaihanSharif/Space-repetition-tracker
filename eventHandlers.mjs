@@ -40,9 +40,13 @@ function displayAgenda(userId, agendaItems) {
     }
     const agendaLi = agendaItems.map(({ topic, date }) => {
         const li = document.createElement("li");
-        const tempDate = Temporal.PlainDate.from(date).toLocaleString("en-GB", {
+
+        // Temporal polyfill on mobile doesn't work
+        const [year, month, day] = date.split("-").map(Number);
+        const tempDate = new Intl.DateTimeFormat("en-GB", {
             dateStyle: "long",
-        });
+        }).format(new Date(year, month - 1, day));
+
         li.textContent = `${topic} || Date: ${tempDate}`;
         return li;
     });
