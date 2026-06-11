@@ -2,8 +2,8 @@ import { addTopic, getAgenda } from "./topicFunctions.mjs";
 
 export function handleSelectUser(e) {
     const userId = e.target.value;
+    if (!userId) return;
     const agendaItems = getAgenda(userId);
-    console.log(agendaItems);
     displayAgenda(userId, agendaItems);
 }
 
